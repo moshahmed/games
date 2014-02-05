@@ -41,7 +41,7 @@ Compiling:
 */
 
 const char *USAGE[] = {
-  "Rubiks cube simulator, (C) Mohsin Ahmed, 1990+ ",
+  "Rubiks cube simulator, (C) moshahmed/at/gmail  ",
   "---------------------KEYS--------------------- ",
   "l,r,u,d,f,b      : rotate faces.               ",
   "L,R,U,D,arrows   : rolling cube.               ",
@@ -841,7 +841,7 @@ test(int testnumber, int doit ) {
     if( strstr( testcases[i], "bist" ) )
         strcat( sprt, done()?
                 " passed, press i to initialize.":
-                "failed, report to mosh@cs.albany.edu" );
+                "failed, fix it yourself............." );
     amessage( sprt );
     drawcube();
 }

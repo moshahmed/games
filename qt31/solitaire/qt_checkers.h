@@ -1,4 +1,4 @@
-// $Header: /cygdrive/c/cvs/repo/mosh/qt/qt_checkers/qt_checkers.h,v 1.21 2013-07-22 02:04:43 a Exp $
+// $Header: c:/cvs/repo/github/games/qt31/solitaire/qt_checkers.h,v 1.1 2014-02-04 03:32:59 a Exp $
 // AUTHOR: GPL(C) moshahmed, 2005-05-07 Sat 21:59
 
 #ifndef CHECKERS_H

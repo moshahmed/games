@@ -1,4 +1,4 @@
-// $Header: /cygdrive/c/cvs/repo/mosh/qt/marbles2/qt_checkers.cpp,v 1.21 2014-02-01 10:30:59 a Exp $
+// $Header: c:/cvs/repo/github/games/qt31/solitaire/qt_checkers.cpp,v 1.1 2014-02-04 03:32:59 a Exp $
 
 // AUTHOR: GPL(C) moshahmed/at/gmail
 // DATE 2005-05-07 Sat 21:58

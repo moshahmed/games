@@ -1,6 +1,6 @@
-# 99-01-03 15:46, GPL(C) Mohsin_Ahmed, mailto:mosh@mars.sasi.com.
-# Problems worth of attack prove their worth by hitting back - Piet Hein.
-# Rubik's cube pattern test file.
+# WHAT: Rubik's cube pattern test file, used by cube.cpp
+# Quote: Problems worth of attack prove their worth by hitting back - Piet Hein.
+# Author: GPL(C) moshahmed/at/gmail
 Mosh/bist/1     = (ruf)240.   
 Mosh/flip corner= rfr-frffr-l-f-lf-l-ffl
 Six spot        = u d- r l- f b- u d-.

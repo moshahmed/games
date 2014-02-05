@@ -1,7 +1,7 @@
 program mastermind;
 {
   GPL(C) moshahmed/at/gmail
-  $Header: c:/cvs/repo/mosh/games/mmind.pas,v 1.3 2013-07-28 05:58:16 a Exp $ 
+  $Header: c:/cvs/repo/github/games/pascal/mastermind.pas,v 1.1 2014-02-04 03:31:59 a Exp $ 
 
  SYNOPSIS: MASTERMIND game, Player has to guess the colour and
     position of four hidden pegs arranged by the computer in row zero.

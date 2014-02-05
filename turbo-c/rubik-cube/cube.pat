@@ -146,10 +146,7 @@ and Beyond.
 
   U F R2 F- D- R U B2 U2 F- R2 F D B2 R B- (21q*, 16f*)
 
-============================================================
 From: http://ssie.binghamton.edu/~jirif/ptrns.html
-On:   Mohsin_Ahmed (mosh@saspc128.sasi.com), 98-06-03 09:47.
-
 
 Pretty Patterns
 

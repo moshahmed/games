@@ -1,4 +1,4 @@
-// $Header: /cygdrive/c/cvs/repo/mosh/qt/qt_mastermind/qt_mastermind.cpp,v 1.14 2013-07-21 03:34:59 a Exp $
+// $Header: c:/cvs/repo/github/games/qt31/mastermind/qt_mastermind.cpp,v 1.1 2014-02-04 03:32:29 a Exp $
 
 // AUTHOR: GPL(C) moshahmed/at/gmail
 // DATE: 2005-04-29 Fri 21:14
