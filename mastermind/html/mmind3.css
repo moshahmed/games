@@ -1,0 +1,29 @@
+<head>
+ <style type="text/css">
+  x { }
+
+  body {
+    background-color: Bisque;
+    background-image: url('mmind3.jpg');
+  } 
+  span {
+    font-size: 20px;
+  }
+
+  span.classW { color: black ; background-color: white; }
+  span.classW { color: black ; background-color: white; }
+  span.classB { color: white ; background-color: black; }
+  span.classS { visibility: hidden; }
+
+  span.class1 { color: black ; background-color: LightCoral; }
+  span.class2 { color: white ; background-color: RoyalBlue; }
+  span.class3 { color: white ; background-color: ForestGreen; }
+  span.class4 { color: black ; background-color: Gold; }
+  span.class5 { color: black ; background-color: LightCoral; }
+  span.class6 { color: white ; background-color: Purple; }
+  span.class7 { color: white ; background-color: SaddleBrown; }
+  span.class8 { color: white ; background-color: Olive; }
+  span.class9 { color: black ; background-color: Silver; }
+ 
+ </style>
+</head>
