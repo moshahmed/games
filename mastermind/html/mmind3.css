@@ -1,29 +1,30 @@
-<head>
- <style type="text/css">
-  x { }
+<!--
+  $Id: mmind3.css,v 1.8 2020/05/27 15:28:59 User Exp $
+  GPL(C) moshahmed
+-->   
 
-  body {
-    background-color: Bisque;
-    background-image: url('mmind3.jpg');
-  } 
-  span {
-    font-size: 20px;
-  }
+x { }
 
-  span.classW { color: black ; background-color: white; }
-  span.classW { color: black ; background-color: white; }
-  span.classB { color: white ; background-color: black; }
-  span.classS { visibility: hidden; }
+body {
+  background-color: Bisque;
+  background-image: url('mmind3.jpg');
+} 
+span {
+  font-size: 20px;
+}
 
-  span.class1 { color: black ; background-color: LightCoral; }
-  span.class2 { color: white ; background-color: RoyalBlue; }
-  span.class3 { color: white ; background-color: ForestGreen; }
-  span.class4 { color: black ; background-color: Gold; }
-  span.class5 { color: black ; background-color: LightCoral; }
-  span.class6 { color: white ; background-color: Purple; }
-  span.class7 { color: white ; background-color: SaddleBrown; }
-  span.class8 { color: white ; background-color: Olive; }
-  span.class9 { color: black ; background-color: Silver; }
- 
- </style>
-</head>
+*.classW { color: black ; background-color: white; }
+*.classW { color: black ; background-color: white; }
+*.classB { color: white ; background-color: black; }
+*.classS { visibility: hidden; }
+
+*.class1 { color: black ; background-color: LightCoral; }
+*.class2 { color: white ; background-color: RoyalBlue; }
+*.class3 { color: white ; background-color: ForestGreen; }
+*.class4 { color: black ; background-color: Gold; }
+*.class5 { color: black ; background-color: LightCoral; }
+*.class6 { color: white ; background-color: Purple; }
+*.class7 { color: white ; background-color: SaddleBrown; }
+*.class8 { color: white ; background-color: Olive; }
+*.class9 { color: black ; background-color: Silver; }
+
