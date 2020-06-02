@@ -1,7 +1,17 @@
-// $Header: c:/cvs/repo/mosh/cc/games/solitaire.c,v 1.8 2018/04/08 20:56:35 User Exp $
-// AUTHOR: GPL(C) moshahmed/at/gmail.com
+/*
+  $Header: c:/cvs/repo/mosh/cc/games/solitaire.c,v 1.9 2020/06/02 09:56:26 User Exp $
+  GPL(C) moshahmed
+  Notes:
+    Played on a board of size with colored pegs:
+    +---+
+    |.2.|   DUD  RED   DUD
+    |232|   BLUE SPC   GREEN
+    |.2.|   DUD  BROWN DUD
+    +---+
+*/
+ 
 char USAGE[] =
-"pego - a game of pegs, GPL(C) moshahmed                            \n"
+"Pego solitaire - a game of pegs, GPL(C) moshahmed                  \n"
 "  Reference: Peg Solitare, chp 11, pp 122-133. Further Mathematical\n"
 "     Diversions, Martin Gardner, Penguin Books, 1969.              \n"
 "  Usage: pego <gamenumber>, eg. pego 0.                            \n"
@@ -11,20 +21,29 @@ char USAGE[] =
 "     Leave Last peg in center for games 0..6.                      \n"
 ;
 
-/*
-  turboc2: getche(), textcolor(), gotoxy(), clrscr(), cprintf().
-  compile: d:\tc\bin\tcc -Id:\tc\include -Ld:\tc\lib pego
-
-                                    2     DUD  RED   DUD
-  Notes: played on a board of size 232    BLUE SPC   GREEN
-                                    2     DUD  BROWN DUD
-*/
 
 #ifndef __TURBOC__
-#error  "Need turbo c 2.0 to compile"
-#endif
+/* 
+  2020-06-02 conio.* from https://github.com/thradams/conio
+  vc14> cl solitaire.c conio.c
+*/
+#include <stdio.h>
+#include "conio.h"
+#define gotoxy    c_gotoxy
+#define textcolor c_textcolor
+#define clrscr    c_clrscr
+#define cprintf   printf
 
+#define is_extended(c)   (c!=0)
+
+#else
+/*
+  turboc2: getche(), textcolor(), gotoxy(), clrscr(), cprintf().
+  compile> d:\tc\bin\tcc -Id:\tc\include -Ld:\tc\lib pego
+*/
 #include <conio.h>
+#define is_extended(c)   (c==0)
+#endif
 
 #define K (2+3+2)
 #define forin(i,N) for(i=0;i<N;i++)
@@ -188,7 +207,7 @@ void main(int argc, char* argv[] )
     draw();
 
     while( (ic = getche()) != 'q'){
-        if( ic == 0 ){  // extended char?
+        if( is_extended(ic) ){  // extended char?
             uchar ec = getche();
             switch( ec ){
               case 80: ic = 'd'; CASE 145: ic = 'D';
