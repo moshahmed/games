@@ -1,17 +1,18 @@
 /*
 What: Rubiks cube simulator.
-$Id: cube.cpp,v 1.8 2013-07-28 05:48:51 a Exp $
+$Id: cube.cpp,v 1.13 2020/06/07 07:20:38 User Exp $
 AUTHOR: GPL(C) moshahmed/at/gmail
 Compiling:
- Turbo C 2.0 for MSDOS/Windows 95/NT. Ported and improved.
+ Turbo Pascal 5.0 version for MSDOS/Windows 95/NT (Console mode)
+     c:\> tpc cube.pas
+ Turbo C 2.0 for MSDOS/Windows 95/NT. Ported and improved 1/1/99.
      c:\> tcc -Id:\tc\include -Ld:\tc\lib cube.cpp
-     c:\> cube.EXE
  Linux: g++: Curses C version for Linux/Unix, compile with:
      $ g++ -Wall cube.cpp -lcurses -ltermcap -o cube
-     $ TERM=console cube ruf Q # works.
+     $ TERM=console cube ruf Q # works!
  Cygwin:
      $ g++ -Wall cube.cpp -lcurses -lncurses -o cube
-     $ cube ruf # works.
+     $ cube ruf # works!
  Caveats: Don't check for input string overflow.
 
     +---+                            f1
@@ -55,7 +56,7 @@ const char *USAGE[] = {
   "String S ::= A | N | (S)N                      ",
   "Usage and details c:\\> cube -?                ",
   "---------------------------------------------- ",
-  "References:                            HRW=Holt Rinehart & Winston,NY",
+  "References: HRW=Holt Rinehart & Winston,NY",
   "o Mastering Rubik's cube, Don Taylor, ISBN0-03-059941-5, HRW 1980.   ",
   "o Cube Games, Don Taylor and Leanne Rylands, HRW 1981.               ",
   "o http://ssie.binghamton.edu/~jirif/ptrns.html                       ",
@@ -77,6 +78,7 @@ const char *USAGE[] = {
   "> cube             Use keys as above, t/T to run inbuilt patterns    ",
   "> cube 123 Q       Run testcase #123 and Quit leaving cube on screen ",
   "> cube i(ruf)240   Start with init and apply 'ruf' 240 times.        ",
+  ""
 };
 
 // =========================================================
@@ -841,7 +843,7 @@ test(int testnumber, int doit ) {
     if( strstr( testcases[i], "bist" ) )
         strcat( sprt, done()?
                 " passed, press i to initialize.":
-                "failed, fix it yourself............." );
+                "failed, report to moshahmed@gmail" );
     amessage( sprt );
     drawcube();
 }
