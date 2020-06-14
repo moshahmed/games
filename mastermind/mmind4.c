@@ -1,18 +1,18 @@
 /*
 What: MASTERMIND game, guess the pin colors and position from clues.
-$Id: mmind4.c,v 1.1 2014-02-26 00:58:16 a Exp $
-AUTHOR: GPL(C) moshahmed/at/gmail
+$Id: mmind4.c,v 1.25 2020/06/13 04:33:53 User Exp $
+AUTHOR: GPL(C) moshahmed/at/gmail.com
 COMPILER: vc++ for windows console, turboc for dos, gcc with curses on linux.
 Compiling:
     Turbo Pascal 5.0 version for MSDOS/Windows95/WindowsNT (Console mode)
     Turbo C 2.0 for MSDOS/Windows95/WindowsNT.
       c:\> tcc -Id:\tc\include -Ld:\tc\lib mmind4.c
-    Linux: Curses C version, compile with:
-      TODO: rebuild and test on linux
-      $ gcc -Wall mmind4.c -DCURSES -lcurses -ltermcap -o mmind4
-    VC++ 6.0:
-      c:\> cl mmind4.c  (Runs in console mode)
-    Cygwin ncurses (2011-04-26,2013-07-28)
+    NCurses C version linux (sof 2020-05-27)
+      $ gcc -Wall mmind4.c -DNCURSES -lncurses -ltermcap -o mmind4
+    VC++ 6.0, vc14 (wasat 2020-05-27)
+      c:\> cl mmind4.c
+      c:/bin14/mmind4.exe .. Runs in console mode
+    Cygwin ncurses (2011-04-26,2013-07-28),
       $ gcc -Wall mmind4.c -DNCURSES -l ncurses -o mmind4
 */
 
@@ -103,66 +103,66 @@ char USAGE[] = " USAGE: mmind4 [OPTIONS]	\n\n"
     hStdout = GetStdHandle ( STD_OUTPUT_HANDLE );
     hStdin = GetStdHandle(STD_INPUT_HANDLE);
     if ( INVALID_HANDLE_VALUE == hStdout ||
-         INVALID_HANDLE_VALUE == hStdin) {
+        INVALID_HANDLE_VALUE == hStdin) {
       printf("INVALID_HANDLE_VALUE\n");
       exit(1);
     }
-    SetConsoleTitle("Mastermind (VC++) $Id: mmind4.c,v 1.1 2014-02-26 00:58:16 a Exp $");
+    SetConsoleTitle("Mastermind (VC++) $Id: mmind4.c,v 1.25 2020/06/13 04:33:53 User Exp $");
   }
 
   void gotoxy(int x, int y) {
-     COORD pos; 
-     pos.X = (short) y; // swap x y.
-     pos.Y = (short) x;
-     SetConsoleCursorPosition ( hStdout, pos );
+    COORD pos;
+    pos.X = (short) y; // swap x y.
+    pos.Y = (short) x;
+    SetConsoleCursorPosition ( hStdout, pos );
   }
   void move(int x, int y) {
-     gotoxy(x,y);
+    gotoxy(x,y);
   }
 
   void clrtoeol() {
     int i=80;
-    CONSOLE_SCREEN_BUFFER_INFO csbi; /* to get buffer info */ 
+    CONSOLE_SCREEN_BUFFER_INFO csbi; /* to get buffer info */
     GetConsoleScreenBufferInfo( hStdout, &csbi );
-    for(i=csbi.dwCursorPosition.X; i<csbi.srWindow.Right;i++) { 
-      printf(" "); 
+    for(i=csbi.dwCursorPosition.X; i<csbi.srWindow.Right;i++) {
+      printf(" ");
     }
   }
 
   // From microsoft support.
-  /* Standard error macro for reporting API errors */ 
+  /* Standard error macro for reporting API errors */
   #define PERR(ok, api){if(!(ok)) \
-     printf("%s:Error %d from %s on line %d\n", \
+    printf("%s:Error %d from %s on line %d\n", \
         __FILE__, GetLastError(), api, __LINE__);}
 
   void clear() {
     // was: int i=40; while(i-->0){ gotoxy(i,0); clrtoeol(); }
-    COORD home = { 0, 0 };  /* here's where we'll home the cursor */ 
+    COORD home = { 0, 0 };  /* here's where we'll home the cursor */
     BOOL ok;
     DWORD cCharsWritten;
-    CONSOLE_SCREEN_BUFFER_INFO csbi; /* to get buffer info */ 
-    DWORD dwConSize; /* number of character cells in the current buffer */ 
+    CONSOLE_SCREEN_BUFFER_INFO csbi; /* to get buffer info */
+    DWORD dwConSize; /* number of character cells in the current buffer */
 
-    /* Get the number of character cells in the current buffer */ 
+    /* Get the number of character cells in the current buffer */
     ok = GetConsoleScreenBufferInfo( hStdout, &csbi );
     PERR( ok, "GetConsoleScreenBufferInfo" );
     dwConSize = csbi.dwSize.X * csbi.dwSize.Y;
 
-    /* Fill the entire screen with blanks */ 
+    /* Fill the entire screen with blanks */
     ok = FillConsoleOutputCharacter( hStdout, (TCHAR) ' ',
-       dwConSize, home, &cCharsWritten );
+      dwConSize, home, &cCharsWritten );
     PERR( ok, "FillConsoleOutputCharacter" );
 
-    /* Get the current text attribute */ 
+    /* Get the current text attribute */
     ok = GetConsoleScreenBufferInfo( hStdout, &csbi );
     PERR( ok, "ConsoleScreenBufferInfo" );
 
-    /* Now set the buffer's attributes accordingly */ 
+    /* Now set the buffer's attributes accordingly */
     ok = FillConsoleOutputAttribute( hStdout, csbi.wAttributes,
-       dwConSize, home, &cCharsWritten );
+      dwConSize, home, &cCharsWritten );
     PERR( ok, "FillConsoleOutputAttribute" );
 
-    /* Put the cursor at (0, 0) */ 
+    /* Put the cursor at (0, 0) */
     ok = SetConsoleCursorPosition( hStdout, home );
     PERR( ok, "SetConsoleCursorPosition" );
     return;
@@ -174,9 +174,9 @@ char USAGE[] = " USAGE: mmind4 [OPTIONS]	\n\n"
   }
 
 
-  void mvaddstr( int i, int j, chtype*s ){ 
-    gotoxy(i,j); 
-    printf("%s", s); 
+  void mvaddstr( int i, int j, chtype*s ){
+    gotoxy(i,j);
+    printf("%s", s);
   }
 
 // For console colors see C:/vc6/vc98/include/WINCON.H
@@ -218,29 +218,29 @@ char USAGE[] = " USAGE: mmind4 [OPTIONS]	\n\n"
     whiteOnBlack();
   }
 
-  void mvaddch(  int i, int j, chtype c ){ 
+  void mvaddch(  int i, int j, chtype c ){
     gotoxy(i,j);
     charcolor(c);
   }
-  void mvaddint(  int i, int j, int n ){   
-    gotoxy(i,j); 
-    printf("%d", n); 
+  void mvaddint(  int i, int j, int n ){
+    gotoxy(i,j);
+    printf("%d", n);
   }
-  void addstr(chtype*s){ 
-    printf("%s",s); 
+  void addstr(chtype*s){
+    printf("%s",s);
   }
-  void addint(chtype*f, int n){ 
-    printf(f,n); 
+  void addint(chtype*f, int n){
+    printf(f,n);
   }
-  void addch( chtype c){  
-    printf("%c", c); 
+  void addch( chtype c){
+    printf("%c", c);
   }
   chtype getch() {
     // From http://www.adrianxw.dk/SoftwareSite/Consoles/Consoles5.html
     INPUT_RECORD InRec;
     DWORD NumRead;
     DWORD EventCount;
-    
+
     Sleep(100);
     GetNumberOfConsoleInputEvents(hStdin, &EventCount);
     while (EventCount > 0) {
@@ -250,14 +250,18 @@ char USAGE[] = " USAGE: mmind4 [OPTIONS]	\n\n"
       }
       GetNumberOfConsoleInputEvents(hStdin, &EventCount);
     }
-    return '@'; // bad_char           
+    return '@'; // bad_char
   }
-  chtype mvgetch(int i, int j){ 
-    gotoxy(i,j); 
+  chtype mvgetch(int i, int j){
+    gotoxy(i,j);
     return getch();
   }
 #elif defined(NCURSES)
   #include <ncurses/curses.h>
+  #define chtype char 
+  void   addint(chtype*f,int n){ printf(f,n); }
+  void   mvaddint( int i, int j, int n){ move(i,j); printf("%d",n); }
+  void   charcolor(char c) { }
 #endif
 
 enum {
@@ -344,8 +348,8 @@ static struct {
   1.0, // sigma
   100,  // max_try
   "mm", "p.txt", "s.txt",
-  "GPL(C) Mohsin Ahmed, moshahmed",
-  "$Id: mmind4.c,v 1.1 2014-02-26 00:58:16 a Exp $"
+  "GPL(C) moshahmed",
+  "$Id: mmind4.c,v 1.25 2020/06/13 04:33:53 User Exp $"
   };
 
 // All arrays are zero indexed, char[] are null terminated.
@@ -396,11 +400,11 @@ void perm_dup(int z) {
   int i;
   // Generated starts with MMCOLORS.A*
   for (i=0; i<PEGS.PN ; i++) {
-     if (z>0) {
-       perm[z].generated[i] = perm[z-1].generated[i];
-     } else {
-       perm[z].generated[i] = MMCOLORS.A;
-     }
+    if (z>0) {
+      perm[z].generated[i] = perm[z-1].generated[i];
+    } else {
+      perm[z].generated[i] = MMCOLORS.A;
+    }
   }
   perm[z].generated[PEGS.PN] = '\0'; // Make it a string.
   perm[z].consistent = TRUE;
@@ -462,7 +466,7 @@ void show_choices(int step) {
   int z;
   int col = COLUMNS.CONSISTENTS.MIN, row = ROWS.CONSISTENTS.MIN;
 
-  if (opt.batch_mode) 
+  if (opt.batch_mode)
     return;
 
   // clear all lines, may have to clear more than we print.
@@ -496,7 +500,7 @@ void show_choices(int step) {
 // Generate all permutations, assume that perm is the solution
 // and count how many guesses are consistent with it.
 void consistent_perms(int step) {
-  clear_perm(); 
+  clear_perm();
   perm_dup(perm_count);
   grids[step].consistents = 0;
   do {
@@ -513,7 +517,7 @@ void consistent_perms(int step) {
       grids[step].consistents++;
     }
     if (perm_end(perm[perm_count].generated))
-       break;
+      break;
     perm_count++;
     if (perm_count >= PERM_MAX) {
       if (opt.batch_mode) {
@@ -601,7 +605,7 @@ int random_normal_ab(int a, int b, double sigma) {
   if (ab > b) return b;
   return ab;
 }
- 
+
 int rand_color() {
   return MMCOLORS.ALL[ rand() % MMCOLORS.CN ];
 }
@@ -652,15 +656,19 @@ void problem_generator_i(int pn, FILE *pf, FILE *sf) {
 
   rand_problem();
 
-  fprintf(pf, "Puzzle %d, find %d pegs of %d colors [%s] {\n",
-    pn, PEGS.PN, MMCOLORS.CN, MMCOLORS.valid_colors);
+  // fprintf(pf, "Puzzle %d, find %d pegs of %d colors [%s] {\n",
+  //   pn, PEGS.PN, MMCOLORS.CN, MMCOLORS.valid_colors);
+  fprintf(pf, "Puzzle %d, find %d pegs of %d colors {\n",
+    pn, PEGS.PN, MMCOLORS.CN);
 
   fprintf(sf, "solution %3d: %s %s (", pn,
     grids[ROWS.SOLUTION].guesses, grids[ROWS.SOLUTION].hints);
 
   if (opt.verbosity) {
-    printf("Puzzle %3d, find %d pegs of %d colors [%s]\n",
-      pn, PEGS.PN, MMCOLORS.CN, MMCOLORS.valid_colors);
+    printf("Puzzle %3d, find %d pegs of %d colors\n",
+      pn, PEGS.PN, MMCOLORS.CN);
+    // printf("Puzzle %3d, find %d pegs of %d colors [%s]\n",
+    //   pn, PEGS.PN, MMCOLORS.CN, MMCOLORS.valid_colors);
   }
 
   for (step=1; step < MAXTRY; step++) {
@@ -698,9 +706,9 @@ void problem_generator() {
 
     // output file names are output_path + ..file_name
     assert(strlen(generator.output_path) +
-           strlen(generator.problem_file_name) < PATH_MAX);
+          strlen(generator.problem_file_name) < PATH_MAX);
     assert(strlen(generator.output_path) +
-           strlen(generator.solution_file_name) < PATH_MAX);
+          strlen(generator.solution_file_name) < PATH_MAX);
 
     strcpy(problem_file, generator.output_path);
     strcat(problem_file, generator.problem_file_name);
@@ -798,7 +806,7 @@ void help(void) {
     mvaddstr( row++,col, "| Q to Quit, BACKSPACE to erase.                   |");
     mvaddstr( row++,col, "| S to see solution and play, C to see choices.    |");
     mvaddstr( row++,col, "| G to let computer make a good guess.             |");
-    mvaddstr( row++,col, "| GPL(C) 2014      Mohsin Ahmed, moshahmed         |");
+    mvaddstr( row++,col, "| (C) moshahmed                                    |");
     mvaddstr( row++,col, "|                                                  |");
     mvaddstr( row++,col, "+--------------------------------------------------+");
     refresh();
@@ -917,9 +925,11 @@ void check_widths(char* guesses, char* hints) {
   }
 }
 
-void read_problem_file(void) {
+
+
+void read_problem_file(int puzzle_count) {
   int step = 0;
-  printf("Reading problem to solve from file '%s'\n", solver.solveme);
+  printf("Reading problem %d to solve from file '%s'\n", puzzle_count, solver.solveme);
   clear_grid();
   do {
     int parsed;
@@ -932,11 +942,13 @@ void read_problem_file(void) {
     }
     solver.lineno++;
     line[ strlen(line)-1 ] = '\0';
+    if ( line[ strlen(line)-1 ] ==  '\r')
+      line[ strlen(line)-1 ] = '\0';
 
     // Look for puzzle parameters at the beginning of the puzzle.
     if (STARTS_WITH(line,"Puzzle")){
       int width=0, colors=0;
-      printf("\nParsing new puzzle, on line %d:'%s'\n", solver.lineno, line);
+      printf("Parsing new puzzle, on line %d:'%s'\n", solver.lineno, line);
       parsed = sscanf(line, "%*s %*s %*s %d %*s %*s %d %*s", &width, &colors);
       if( parsed != 2 ) {
         printf("Bad input, line %d:%s\n", solver.lineno, line);
@@ -948,12 +960,12 @@ void read_problem_file(void) {
 
       if (width < 1 || width > PEGS_MAX) {
         printf("Number of pegs PN=%d, out of range [1..%d].\n",
-           width, PEGS_MAX);
+          width, PEGS_MAX);
         exit(1);
       }
       if (colors<2 || colors > COLORS_MAX) {
         printf("Number of colors CN=%d, out of range [2..%d]\n",
-           colors, COLORS_MAX);
+          colors, COLORS_MAX);
         exit(1);
       }
 
@@ -1000,7 +1012,7 @@ void read_problem_file(void) {
   solver.step = step;
 }
 
-void solve_grids(void) {
+void solve_grids(int puzzle_count) {
   int g;
   foreach(g, solver.step) {
     int sc;
@@ -1027,7 +1039,7 @@ void solve_grids(void) {
       }
     }
     if (sc == 1)
-      printf("(found unique solution)");
+      printf("(found unique solution)\nSolved problem %d", puzzle_count);
     printf("\n");
   }
   printf("\n");
@@ -1044,6 +1056,7 @@ void hasarg(int i, int argc, char *opt, char* type) {
 
 void process_options(int argc, char* argv[]) {
   int i;
+  static int puzzle_count=0;
   for( i=1; i < argc; i++ ){
     if (strcmp(argv[i],"-help")==0 || strcmp(argv[i],"-h")==0) {
       printf("%s", USAGE);
@@ -1092,8 +1105,9 @@ void process_options(int argc, char* argv[]) {
         exit(1);
       }
       while (solver.fp) { // file can contain multiple problems.
-        read_problem_file();
-        solve_grids();
+        ++puzzle_count;
+        read_problem_file(puzzle_count);
+        solve_grids(puzzle_count);
       }
       exit(0);
     } else if (hasprefix(argv[i], "-")) {
