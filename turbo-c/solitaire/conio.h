@@ -1,8 +1,3 @@
-/* 
-  From https://github.com/thradams/conio 
-  What: Conio.h for windows and linux, for turbo c.
-*/
-
 #pragma once
 
 

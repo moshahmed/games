@@ -1,8 +1,16 @@
 /*
-  From https://github.com/thradams/conio
   What: Conio.h for windows and linux, for turbo c.
+  From https://github.com/thradams/conio
+  Date: 2020-06-02 Tue 15:39
     This library implements (parts) the of old Turbo C conio.h
-    See conin.h for suported functions.
+    See header file for suported functions.
+  Compiles with
+    2020-06-02 vc14
+    2020-06-11 vc6  
+  Turbo C online
+    https://www.naclbox.com/gallery/turboc
+  Original documentation:
+    http://docs.embarcadero.com/products/rad_studio/radstudio2007/RS2007_helpupdates/HUpdate4/EN/html/devwin32/coniohpart_xml.html
 */
 
 #ifdef _WIN32
@@ -28,9 +36,10 @@ static void setbits(unsigned char *v,
   int nbits,
   unsigned char number)
 {
+  unsigned char big;
   clearbits(&number, nbits, sizeof(number) * CHAR_BIT - nbits);
 
-  unsigned char big = number;
+  big = number;
   big = (big << bit_index);
 
   clearbits(v, bit_index, nbits);
@@ -48,10 +57,11 @@ static unsigned char getbits(unsigned char v, int bit_index, int nbits)
 
 void c_gettextinfo(struct text_info *r)
 {
+  CONSOLE_SCREEN_BUFFER_INFO csbi;
+
   if (r == 0)
     return;
 
-  CONSOLE_SCREEN_BUFFER_INFO csbi;
   GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
 
   r->attribute = (unsigned char)csbi.wAttributes;
@@ -110,9 +120,10 @@ void c_textattr(int newattr)
 void c_textbackground(int newcolor)
 {
   struct text_info ti;
+  unsigned char wColor, old;
   c_gettextinfo(&ti);
-  unsigned char wColor = ti.attribute;
-  unsigned char old = getbits(wColor, 4, 4);
+  wColor = ti.attribute;
+  old = getbits(wColor, 4, 4);
   setbits(&wColor, 4, 4, newcolor);
   c_textattr(wColor);
 }
@@ -120,9 +131,11 @@ void c_textbackground(int newcolor)
 void c_textcolor(int newcolor)
 {
   struct text_info ti;
+  unsigned char wColor;
+  int old;
   c_gettextinfo(&ti);
-  unsigned char wColor = ti.attribute;
-  int old = getbits(wColor, 0, 4);
+  wColor = ti.attribute;
+  old = getbits(wColor, 0, 4);
   setbits(&wColor, 0, 4, newcolor);
   c_textattr(wColor);
 }
